@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>StreamTester - Page A: Single-stream diagnostics</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<h1>Page A &mdash; Single-stream diagnostics</h1>
+
+<div class="row">
+  <div class="panel" style="min-width:260px">
+    <label>Stream count (for dropdown)</label>
+    <input id="streamCount" type="number" value="10" min="1" max="99" style="width:60px">
+
+    <label>Stream</label>
+    <select id="streamSelect"></select>
+
+    <label>Endpoint / transport mode</label>
+    <select id="modeSelect">
+      <option value="direct-ondemand">Direct MediaMTX HLS - profile "ondemand" (http://127.0.0.1:19888)</option>
+      <option value="direct-remux">Direct MediaMTX HLS - profile "remux" (http://127.0.0.1:19889)</option>
+      <option value="proxy-h2">Caddy HTTPS/HTTP-2 proxy (https://127.0.0.1:19443/hls/...)</option>
+      <option value="custom">Custom URL (type below)</option>
+    </select>
+
+    <label>Custom / effective URL</label>
+    <input id="urlBox" type="text" style="width:100%">
+
+    <label>hls.js config (JSON, merged over defaults)</label>
+    <textarea id="hlsConfigBox" style="width:100%;height:70px">{}</textarea>
+
+    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+      <button id="btnStart">Start</button>
+      <button id="btnStop" class="secondary">Stop</button>
+      <button id="btnDestroy" class="secondary">Destroy</button>
+      <button id="btnRecreate" class="secondary">Destroy + Recreate</button>
+      <button id="btnExport" class="secondary">Export JSON</button>
+    </div>
+  </div>
+
+  <div class="panel" style="flex:1; min-width:360px">
+    <video id="video" muted playsinline></video>
+    <div class="mono" id="videoState">(not started)</div>
+  </div>
+
+  <div class="panel" style="min-width:300px">
+    <div>hls.js version: <b id="hlsjsVersion">-</b></div>
+    <div>Effective URL: <span class="mono" id="effectiveUrl">-</span></div>
+    <table id="timingTable">
+      <thead><tr><th>Timing</th><th>t (ms since initStart)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row" style="margin-top:12px">
+  <div class="panel" style="flex:1; min-width:300px">
+    <div><b>Effective hls.js config</b></div>
+    <pre class="mono" id="effectiveConfig">-</pre>
+  </div>
+  <div class="panel" style="flex:1; min-width:300px">
+    <div><b>Recent errors</b></div>
+    <div class="log" id="errorLog"></div>
+  </div>
+  <div class="panel" style="flex:1; min-width:300px">
+    <div><b>hls.js events</b></div>
+    <div class="log" id="eventLog"></div>
+  </div>
+  <div class="panel" style="flex:1; min-width:300px">
+    <div><b>Request statistics (Resource Timing, matching this URL's origin+path)</b></div>
+    <div class="log" id="reqStats"></div>
+  </div>
+</div>
+
+<script src="vendor/hls.min.js"></script>
+<script src="common.js"></script>
+<script src="diagnostics.js"></script>
+</body>
+</html>

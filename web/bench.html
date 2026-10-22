@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>StreamTester - Page B: Multi-stream benchmark grid</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<h1>Page B &mdash; Multi-stream benchmark grid</h1>
+
+<div class="panel">
+  <div class="row">
+    <div>
+      <label>Stream count</label>
+      <input id="streamCount" type="number" value="10" min="1" max="99" style="width:70px">
+    </div>
+    <div>
+      <label>Endpoint / transport mode</label>
+      <select id="modeSelect">
+        <option value="direct-ondemand">Direct - ondemand (http://127.0.0.1:19888)</option>
+        <option value="direct-remux">Direct - remux (http://127.0.0.1:19889)</option>
+        <option value="proxy-h2">Proxy HTTP/2 (https://127.0.0.1:19443/hls/...)</option>
+      </select>
+    </div>
+    <div>
+      <label>Initialization mode</label>
+      <select id="initMode">
+        <option value="concurrent">Concurrent (default)</option>
+        <option value="sequential">Sequential (deliberate, for comparison)</option>
+      </select>
+    </div>
+    <div>
+      <label>Per-stream timeout (ms)</label>
+      <input id="timeoutMs" type="number" value="20000" style="width:80px">
+    </div>
+    <div>
+      <label>hls.js config (JSON, applied to every tile)</label>
+      <input id="hlsConfigBox" type="text" value="{}" style="width:260px">
+    </div>
+    <div>
+      <label>Scenario / run label (for export)</label>
+      <input id="runLabel" type="text" value="manual-run" style="width:160px">
+    </div>
+  </div>
+  <div style="margin-top:10px; display:flex; gap:6px;">
+    <button id="btnStartAll">Start All</button>
+    <button id="btnStopAll" class="secondary">Stop All</button>
+    <button id="btnReset" class="secondary">Reset (teardown + rebuild grid)</button>
+    <button id="btnExport" class="secondary">Export Results JSON</button>
+  </div>
+</div>
+
+<div class="panel" style="margin-top:10px">
+  <div class="summary-stats" id="summary">No run yet.</div>
+</div>
+
+<div id="grid" class="grid" style="margin-top:10px"></div>
+
+<script src="vendor/hls.min.js"></script>
+<script src="common.js"></script>
+<script src="bench.js"></script>
+</body>
+</html>
